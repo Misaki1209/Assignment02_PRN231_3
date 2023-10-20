@@ -1,0 +1,156 @@
+@using Entities.Dtos
+@using Entities.RequestModels
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model AddBookAuthorRequest
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+    BookDto selectedBook = ViewBag.SelectedBookDto;
+    List<AuthorDto> authors = ViewBag.Authors;
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Book Details</h5>
+        <p class="card-text">
+            <span style="font-weight: bold">BookId:</span> @selectedBook.BookId
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Title:</span> @selectedBook.Title
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Type:</span> @selectedBook.Type
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Publisher:</span> @selectedBook.Publisher.PublisherName
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Price:</span> @selectedBook.Price
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Advance:</span> @selectedBook.Advance
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Royalty:</span> @selectedBook.Royalty
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">YtdSales:</span> @selectedBook.YtdSales
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">Notes:</span> @selectedBook.Notes
+        </p>
+        <p class="card-text">
+            <span style="font-weight: bold">PublishedDate:</span> @selectedBook.PublishedDate
+        </p>
+    </div>
+</div>
+<br/><br/>
+
+<h5>Authors</h5>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            AuthorId
+        </th>
+        <th>
+            FirstName
+        </th>
+        <th>
+            LastName
+        </th>
+        <th>
+            Author Order
+        </th>
+        <th>
+            Royalty Percentage
+        </th>
+        <th>
+
+        </th>
+
+
+    </tr>
+    </thead>
+
+    <tbody>
+    @foreach (var item in selectedBook.BookAuthors)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.AuthorId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorOrder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoyalityPercentage)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "UpdateAuthor", new { authorId = item.AuthorId, bookId = item.BookId })
+                @Html.ActionLink("Delete", "DeleteAuthor", new { authorId = item.AuthorId, bookId = item.BookId })
+            </td>
+
+        </tr>
+    }
+    </tbody>
+</table>
+
+<form method="post" asp-action="AddAuthor">
+    <div class="border p-3 mt-4">
+        <div asp-validation-summary="All"></div>
+        <input type="hidden" asp-for="BookId" value="@selectedBook.BookId"/>
+        <div class="row mb-3">
+            <label >Author</label>
+            <select asp-for="AuthorId">
+                @foreach (AuthorDto author in ViewBag.Authors)
+                {
+                    @if (ViewBag.UpdateBookAuthor != null && author.AuthorId == ViewBag.UpdateBookAuthor.AuthorId)
+                    {
+                        <option value="@author.AuthorId" selected>@author.FirstName @author.LastName</option>
+                    }
+                    else
+                    {
+                        <option value="@author.AuthorId">@author.FirstName @author.LastName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="AuthorOrder"></label>
+            @if (ViewBag.UpdateBookAuthor != null)
+            {
+                <input asp-for="AuthorOrder" class="form-control" value="@ViewBag.UpdateBookAuthor.AuthorOrder"/>
+            }
+            else
+            {
+                <input asp-for="AuthorOrder" class="form-control"/>
+            }
+        </div>
+        <div class="row mb-3">
+            <label asp-for="RoyalityPercentage"></label>
+            @if (ViewBag.UpdateBookAuthor != null)
+            {
+                <input asp-for="RoyalityPercentage" class="form-control" value="@ViewBag.UpdateBookAuthor.RoyalityPercentage"/>
+            }
+            else
+            {
+                <input asp-for="RoyalityPercentage" class="form-control"/>
+            }
+            
+        </div>
+
+
+        <button class="btn btn-primary" type="submit">Save</button>
+
+
+    </div>
+</form>

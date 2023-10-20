@@ -1,0 +1,83 @@
+@using Entities.Dtos
+@model BookDto
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+    List<PublisherDto> publishers = ViewBag.Publishers;
+}
+
+<h2>Update Book</h2>
+<form method="post" asp-action="Update">
+    <div class="border p-3 mt-4">
+        <div class="row pb-3">
+            <h2 class="text-primary">Update Book</h2>
+            <hr/>
+        </div>
+        <div asp-validation-summary="All"></div>
+        <input asp-for="BookId" value="@Model.BookId" type="hidden"/>
+        <div class="row mb-3">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control" value="@Model.Title"/>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Type"></label>
+            <input asp-for="Type" class="form-control" value="@Model.Type"/>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="PubId">Publisher</label>
+            <select asp-for="PubId">
+                @foreach (var publisher in publishers)
+                {
+                    @if (publisher.PubId == Model.PubId)
+                    {
+                        <option value="@publisher.PubId" selected>@publisher.PublisherName</option>
+                    }
+                    else
+                    {
+                        <option value="@publisher.PubId">@publisher.PublisherName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Price"></label>
+            <input asp-for="Price" class="form-control" value="@Model.Price"/>
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Advance"></label>
+            <input asp-for="Advance" class="form-control" value="@Model.Advance"/>
+            <span asp-validation-for="Advance" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Royalty"></label>
+            <input asp-for="Royalty" class="form-control" value="@Model.Royalty"/>
+            <span asp-validation-for="Royalty" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="YtdSales"></label>
+            <input asp-for="YtdSales" class="form-control" value="@Model.YtdSales"/>
+            <span asp-validation-for="YtdSales" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Notes"></label>
+            <input asp-for="Notes" class="form-control" value="@Model.Notes"/>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="PublishedDate"></label>
+            <input asp-for="PublishedDate" type="date" class="form-control" value="@Model.PublishedDate"/>
+            <span asp-validation-for="PublishedDate" class="text-danger"></span>
+        </div>
+        
+
+
+        <button class="btn btn-primary" type="submit">Update</button>
+
+
+    </div>
+    <a asp-action="Index" asp-controller="Book">Back to list</a>
+</form>

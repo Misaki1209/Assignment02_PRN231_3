@@ -1,0 +1,28 @@
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div>
+        <label for="Email">Email:</label>
+        <input type="text" name="Email" id="Email" />
+    </div>
+    <div>
+        <label for="Password">Password:</label>
+        <input type="password" name="Password" id="Password" />
+    </div>
+    <div>
+        <input type="submit" value="Login" />
+    </div>
+}
+
+
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <div class="error-message">
+        @ViewBag.ErrorMessage
+    </div>
+}

@@ -1,0 +1,43 @@
+@model Entities.RequestModels.AddPublisherRequest
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Create Publisher</h2>
+<form method="post" asp-action="Create">
+    <div class="border p-3 mt-4">
+        <div class="row pb-3">
+            <h2 class="text-primary">Create Publisher</h2>
+            <hr/>
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="row mb-3">
+            <label asp-for="PublisherName"></label>
+            <input asp-for="PublisherName" class="form-control"/>
+            <span asp-validation-for="PublisherName" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="City"></label>
+            <input asp-for="City" class="form-control"/>
+            <span asp-validation-for="City" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="State"></label>
+            <input asp-for="State" class="form-control"/>
+            <span asp-validation-for="State" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Country"></label>
+            <input asp-for="Country" class="form-control"/>
+            <span asp-validation-for="Country" class="text-danger"></span>
+        </div>
+        
+
+        <button class="btn btn-primary" type="submit">Create</button>
+
+
+    </div>
+    <a asp-action="Index" asp-controller="Publisher">Back to list</a>
+</form>

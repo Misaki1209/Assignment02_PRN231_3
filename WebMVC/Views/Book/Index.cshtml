@@ -1,0 +1,64 @@
+@model List<Entities.Dtos.BookDto>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Book List</h2>
+ <p>
+     <a asp-action="Create">Create New</a>
+ </p>
+ <table class="table">
+     <thead>
+     <tr>
+         <th>
+             BookId
+         </th>
+         <th>
+             Title
+         </th>
+         <th>
+             Type
+         </th>
+         <th>
+             
+         </th>
+         
+ 
+ 
+     </tr>
+     </thead>
+ 
+     <tbody>
+     <tr>
+         <form method="post" asp-action="Index">
+             <td> <input name="bookId" class="form-control" value="@ViewBag.BookId"/> </td>
+             <td> <input name="Title" class="form-control" value="@ViewBag.BookTitle"/> </td>
+             <td> <input name="Type" class="form-control" value="@ViewBag.Type"/> </td>
+             <td> <input type="submit" value="Search" /></td>
+         </form>
+     </tr>
+     
+     @foreach (var item in Model)
+     {
+         <tr>
+             <td>
+                 @Html.DisplayFor(modelItem => item.BookId)
+             </td>
+             <td>
+                 @Html.DisplayFor(modelItem => item.Title)
+             </td>
+             <td>
+                 @Html.DisplayFor(modelItem => item.Type)
+             </td>
+
+             <td>
+                 @Html.ActionLink("Edit", "Update", new { id = item.BookId })
+                 @Html.ActionLink("Detail", "Detail", new { id = item.BookId })
+             </td>
+
+         </tr>
+     }
+     </tbody>
+ </table>
